@@ -1,5 +1,4 @@
 ﻿using FCG.Shared.Contracts.Enums;
-using FCG.Shared.Contracts.Interfaces;
 
 namespace FCG.Shared.Contracts.Events.Libraries
 {

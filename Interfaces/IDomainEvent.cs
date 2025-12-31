@@ -2,7 +2,7 @@
 {
     public interface IDomainEvent
     {
-        string AggregateId { get; }
-        DateTime OccurredAt { get; }
+        public string AggregateId { get; }
+        public DateTime OccurredAt { get; }
     }
 }
