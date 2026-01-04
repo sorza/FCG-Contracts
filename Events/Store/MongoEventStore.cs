@@ -1,9 +1,8 @@
-﻿using FCG.Shared.Contracts.Events.Store;
-using FCG.Shared.Contracts.Interfaces;
+﻿using FCG.Shared.Contracts.Interfaces;
 using MongoDB.Driver;
 using System.Text.Json;
 
-namespace FCG_Users.Infrastructure.Mongo
+namespace FCG.Shared.Contracts.Events.Store
 {
     public class MongoEventStore : IEventStore
     {

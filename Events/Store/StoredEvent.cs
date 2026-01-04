@@ -1,4 +1,6 @@
-﻿namespace FCG_Users.Infrastructure.Mongo
+﻿using FCG.Shared.Contracts.Interfaces;
+
+namespace FCG.Shared.Contracts.Events.Store
 {
     public class StoredEvent
     {
