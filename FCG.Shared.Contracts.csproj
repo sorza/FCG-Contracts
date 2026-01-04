@@ -4,13 +4,17 @@
 		<None Include="README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
+	</ItemGroup>
+
 	<PropertyGroup>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
-		<Version>1.0.17</Version>
+		<Version>1.0.20</Version>
 
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
