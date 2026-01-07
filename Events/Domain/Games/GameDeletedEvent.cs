@@ -4,6 +4,6 @@ namespace FCG.Shared.Contracts.Events.Domain.Games
 {
     public record GameDeletedEvent(string AggregateId, string Title) : IDomainEvent
     {
-        public DateTime OccurredAt { get; } = DateTime.UtcNow;
+        public DateTime OccurredAt { get; init; } = DateTime.UtcNow;
     };
 }

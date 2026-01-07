@@ -5,6 +5,6 @@ namespace FCG.Shared.Contracts.Events.Domain.Libraries
 {
     public record LibraryItemUpdatedEvent(string AggregateId, EOrderStatus status) : IDomainEvent
     {
-        public DateTime OccurredAt { get; } = DateTime.UtcNow;
+        public DateTime OccurredAt { get; init; } = DateTime.UtcNow;
     }
 }
