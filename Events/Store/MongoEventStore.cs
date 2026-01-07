@@ -42,7 +42,7 @@ namespace FCG.Shared.Contracts.Events.Store
             var stored = new StoredEvent
             {
                 AggregateId = aggregateId,
-                EventType = evt!.GetType().AssemblyQualifiedName!,
+                EventType = evt!.GetType().ToString(),
                 Data = JsonSerializer.Serialize(evt),
                 OccurredAt = DateTime.UtcNow,
                 Version = nextVersion,

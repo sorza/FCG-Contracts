@@ -3,8 +3,8 @@ using FCG.Shared.Contracts.Interfaces;
 
 namespace FCG.Shared.Contracts.Events.Domain.Libraries
 {
-    public record LibraryItemCreatedEvent(string AggregateId, Guid UserId, Guid GameId, EOrderStatus Status, decimal? PricePaid) : IDomainEvent
+    public record LibraryItemUpdatedEvent(string AggregateId, EOrderStatus status) : IDomainEvent
     {
         public DateTime OccurredAt { get; } = DateTime.UtcNow;
-    };
+    }
 }
