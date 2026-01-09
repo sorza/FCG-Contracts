@@ -31,9 +31,10 @@ Em vez de duplicar definições de eventos em cada microsserviço, criamos uma *
 ### Padrões de Design Implementados
 
 #### 🏗️ **Domain-Driven Design (DDD)**
-- **Value Objects**: `Email`, `Password` com validação imutável
-- **Entity Base Class**: Abstração de entidades com identidade
+- **Entity Base Class**: Abstração de entidades com identidade única (Id, CreatedAt, UpdatedAt)
+- **ValueObject Base Record**: Classe abstrata para Value Objects
 - **Domain Events**: Representação de fatos ocorridos no domínio
+- **Enums**: EOrderStatus, EPaymentStatus, EPaymentType
 
 #### 📡 **Event-Driven Architecture (EDA)**
 - **Event Sourcing Ready**: Eventos imutáveis como fonte da verdade
@@ -82,13 +83,56 @@ LibraryItemDeletedEvent // Jogo removido da biblioteca
 ## 🔌 Interfaces de Infraestrutura
 
 ### **IDomainEvent**
-Interface marker para todos os eventos de domínio. Garante serialização e metadados consistentes.
+Interface marker para todos os eventos de domínio. Garante estrutura consistente de eventos.
+
+```csharp
+public interface IDomainEvent
+{
+    string AggregateId { get; set; }
+    DateTime OccurredOn { get; set; }
+}
+```
 
 ### **IEventPublisher**
-Abstração para publicação de eventos em message brokers (Azure Service Bus, RabbitMQ, etc).
+Abstração para publicação de eventos em message brokers (Azure Service Bus).
+
+```csharp
+public interface IEventPublisher
+{
+    Task PublishAsync<T>(T @event, string subject, string correlationId) where T : class;
+}
+```
 
 ### **IEventStore**
-Interface para implementação de Event Store (MongoDB, EventStoreDB, SQL).
+Interface para implementação de Event Store (MongoDB).
+
+```csharp
+public interface IEventStore
+{
+    Task AppendAsync<T>(string streamId, T @event, int expectedVersion, string correlationId) where T : class;
+    Task<List<T>> GetEventsAsync<T>(string streamId) where T : class;
+}
+```
+
+### **Entity Base Class**
+Classe abstrata para entidades de domínio com identidade única:
+
+```csharp
+public abstract class Entity(Guid id)
+{
+    public Guid Id { get; init; } = id;
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
+    // Implementa IEquatable<Entity>
+}
+```
+
+### **ValueObject Base Record**
+Record abstrato para Value Objects:
+
+```csharp
+public abstract record ValueObject;
+```
 
 ---
 
@@ -109,7 +153,6 @@ public class UserService
         await _repository.SaveAsync(user);
         
         // 2. Publicar evento de domínio
-        var @event = new UserCreatedEvent
         {
             UserId = user.Id,
             Email = user.Email.Value,
